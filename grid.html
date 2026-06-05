@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GridLock: Fuse & Clear</title>
+
+    <style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,sans-serif;
+}
+
+:root{
+    --cell-size:min(14vw,70px);
+    --gap:min(1vw,6px);
+}
+
+body{
+    background:#0f172a;
+    color:white;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:15px;
+}
+
+.container{
+    text-align:center;
+    width:100%;
+    max-width:600px;
+}
+
+h1{
+    margin-bottom:10px;
+    font-size:clamp(1.4rem,4vw,2.5rem);
+}
+
+.stats{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    margin-bottom:15px;
+    font-weight:bold;
+    flex-wrap:wrap;
+    font-size:clamp(0.9rem,2.5vw,1.1rem);
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(6,var(--cell-size));
+    gap:var(--gap);
+    background:#1e293b;
+    padding:10px;
+    border-radius:15px;
+    width:fit-content;
+    margin:auto;
+}
+
+.cell{
+    width:var(--cell-size);
+    height:var(--cell-size);
+    border-radius:12px;
+    background:#334155;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.cell:hover{
+    transform:scale(1.05);
+}
+
+.red{
+    background:#ef4444;
+}
+
+.blue{
+    background:#3b82f6;
+}
+
+.green{
+    background:#22c55e;
+}
+
+.yellow{
+    background:#facc15;
+}
+
+.purple{
+    background:#a855f7;
+}
+
+.gameover{
+    margin-top:20px;
+    font-size:clamp(1rem,4vw,1.5rem);
+    color:#ff5555;
+}
+
+/* Tablets */
+@media (max-width:768px){
+
+    :root{
+        --cell-size:min(13vw,60px);
+    }
+
+    .stats{
+        gap:15px;
+    }
+}
+
+/* Phones */
+@media (max-width:480px){
+
+    :root{
+        --cell-size:min(14vw,50px);
+    }
+
+    .container{
+        width:100%;
+    }
+
+    .grid{
+        padding:8px;
+    }
+
+    .cell{
+        border-radius:8px;
+    }
+}
+
+/* Very Small Phones */
+@media (max-width:350px){
+
+    :root{
+        --cell-size:min(13vw,42px);
+    }
+
+    .stats{
+        flex-direction:column;
+        gap:8px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>GridLock: Fuse & Clear</h1>
+
+<div class="stats">
+<div>Score: <span id="score">0</span></div>
+<div>Multiplier: x<span id="multiplier">1</span></div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<div id="gameover" class="gameover"></div>
+
+</div>
+
+<script>
+
+const SIZE = 6;
+
+const COLORS = [
+'red',
+'blue',
+'green',
+'yellow',
+'purple'
+];
+
+let board = [];
+let score = 0;
+let multiplier = 1;
+let spawnRate = 2000;
+let gameRunning = true;
+
+const grid = document.getElementById("grid");
+
+function init(){
+
+    board = Array(SIZE)
+    .fill()
+    .map(()=>Array(SIZE).fill(null));
+
+    render();
+
+    for(let i=0;i<5;i++){
+        spawnBlock();
+    }
+
+    startSpawner();
+}
+
+function render(){
+
+    grid.innerHTML='';
+
+    for(let r=0;r<SIZE;r++){
+
+        for(let c=0;c<SIZE;c++){
+
+            const cell=document.createElement('div');
+            cell.className='cell';
+
+            if(board[r][c]){
+                cell.classList.add(board[r][c]);
+            }
+
+            cell.onclick=()=>handleClick(r,c);
+
+            grid.appendChild(cell);
+        }
+    }
+
+    document.getElementById('score').textContent=score;
+    document.getElementById('multiplier').textContent=multiplier;
+}
+
+function emptyCells(){
+
+    let cells=[];
+
+    for(let r=0;r<SIZE;r++){
+        for(let c=0;c<SIZE;c++){
+
+            if(!board[r][c]){
+                cells.push([r,c]);
+            }
+        }
+    }
+
+    return cells;
+}
+
+function spawnBlock(){
+
+    let empties = emptyCells();
+
+    if(empties.length===0){
+
+        gameOver();
+        return;
+    }
+
+    let [r,c] = empties[
+        Math.floor(Math.random()*empties.length)
+    ];
+
+    board[r][c] =
+        COLORS[Math.floor(Math.random()*COLORS.length)];
+
+    render();
+}
+
+function getNeighbors(r,c){
+
+    return [
+        [r-1,c],
+        [r+1,c],
+        [r,c-1],
+        [r,c+1]
+    ].filter(([nr,nc]) =>
+        nr>=0 &&
+        nr<SIZE &&
+        nc>=0 &&
+        nc<SIZE
+    );
+}
+
+function handleClick(r,c){
+
+    if(!gameRunning) return;
+
+    if(board[r][c]) return;
+
+    let groups={};
+
+    getNeighbors(r,c).forEach(([nr,nc])=>{
+
+        let color = board[nr][nc];
+
+        if(color){
+
+            if(!groups[color]){
+                groups[color]=[];
+            }
+
+            groups[color].push([nr,nc]);
+        }
+    });
+
+    let bestColor=null;
+    let max=0;
+
+    for(let color in groups){
+
+        if(groups[color].length>max){
+            max=groups[color].length;
+            bestColor=color;
+        }
+    }
+
+    if(max>=2){
+
+        groups[bestColor].forEach(([nr,nc])=>{
+            board[nr][nc]=null;
+        });
+
+        let gained=max*10*multiplier;
+
+        score+=gained;
+        multiplier++;
+
+    }else{
+
+        multiplier=1;
+    }
+
+    render();
+}
+
+function gameOver(){
+
+    gameRunning=false;
+
+    document.getElementById("gameover")
+    .textContent=
+    "GAME OVER • Score: " + score;
+}
+
+function startSpawner(){
+
+    const loop=()=>{
+
+        if(!gameRunning) return;
+
+        spawnBlock();
+
+        spawnRate*=0.97;
+
+        if(spawnRate<450){
+            spawnRate=450;
+        }
+
+        setTimeout(loop,spawnRate);
+
+    };
+
+    setTimeout(loop,spawnRate);
+}
+
+init();
+
+</script>
+
+</body>
+</html>
