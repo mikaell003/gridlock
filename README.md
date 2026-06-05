@@ -1,10 +1,10 @@
-# 🎮 GridLock: Fuse & Clear
+# 🎮 GridLogic: Fuse & Clear
 
 A fast-paced browser puzzle game where players strategically clear colored blocks before the board fills up.
 
 ## 📖 About
 
-GridLock: Fuse & Clear is a minimalist arcade-puzzle game built with pure HTML, CSS, and JavaScript. Colored blocks continuously spawn onto a 6×6 grid. Players must click empty cells to fuse and clear neighboring blocks of the same color, earning points and increasing their score multiplier.
+GridLogic: Fuse & Clear is a minimalist arcade-puzzle game built with pure HTML, CSS, and JavaScript. Colored blocks continuously spawn onto a 6×6 grid. Players must click empty cells to fuse and clear neighboring blocks of the same color, earning points and increasing their score multiplier.
 
 The challenge grows over time as blocks spawn faster and faster. Once the grid is completely filled, the game ends.
 
@@ -75,13 +75,13 @@ GridLock/
 Clone the repository:
 
 ```bash
-https://github.com/mikaell003/gridlock.git
+https://github.com/mikaell003/gridlogic.git
 ```
 
 Open the project:
 
 ```bash
-cd gridlock
+cd gridlogic
 ```
 
 Launch:
