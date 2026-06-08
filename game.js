@@ -248,4 +248,32 @@ function showMultFlash(text,color){
 }
 
 function updateStats(){
-  document.getElementById
+  document.getElementById('score').textContent=score.toLocaleString();
+  document.getElementById('multiplier').textContent='×'+multiplier;
+  document.getElementById('hiScore').textContent=Math.max(score,hiScore).toLocaleString();
+  document.getElementById('levelNum').textContent=level;
+  document.getElementById('levelFill').style.width=(levelXP*100)+'%';
+}
+
+function gameOver(){
+  gameRunning=false;
+  if(spawnTimer) clearTimeout(spawnTimer);
+
+  const isNew=score>hiScore;
+  if(isNew){hiScore=score;localStorage.setItem('gridlock_hi',hiScore);}
+
+  playGameOver();
+
+  setTimeout(()=>{
+    document.getElementById('finalScore').textContent=score.toLocaleString();
+    document.getElementById('goHiScore').textContent=hiScore.toLocaleString();
+    document.getElementById('finalLevel').textContent=level;
+    document.getElementById('finalCombo').textContent='×'+maxMultiplier;
+    const nr=document.getElementById('newRecord');
+    if(isNew) nr.classList.remove('hidden'); else nr.classList.add('hidden');
+    document.getElementById('gameoverScreen').classList.remove('hidden');
+  },800);
+}
+
+// Init: show start screen
+showStart();
