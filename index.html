@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GridLock: Fuse &amp; Clear</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div class="overlay" id="startScreen">
+  <div class="overlay-card">
+    <div class="overlay-title" style="background:linear-gradient(135deg,#60c8ff,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">GRIDLOCK</div>
+    <div class="overlay-sub">FUSE &amp; CLEAR</div>
+    <div style="margin-bottom:20px;padding:14px;background:var(--surface2);border-radius:10px;border:1px solid var(--border);text-align:left;font-size:0.82rem;line-height:1.8;">
+      <div style="color:#60c8ff;font-family:'Orbitron',monospace;font-size:0.68rem;letter-spacing:0.12em;margin-bottom:6px;">HOW TO PLAY</div>
+      <div>🎯 Click an <strong>empty cell</strong> surrounded by <strong>2+ blocks</strong> of the same color to fuse them</div>
+      <div>✨ More blocks fused = <strong>bigger score</strong></div>
+      <div>🔥 Chain fusions to grow your <strong>multiplier</strong></div>
+      <div>⚡ Grid fills up faster as levels increase</div>
+      <div>💀 Game ends when the <strong>grid is full</strong></div>
+    </div>
+    <div id="startHiScore" style="margin-bottom:14px;"></div>
+    <button class="btn btn-primary" style="width:100%;padding:14px;font-size:0.8rem;" onclick="startGame()">START GAME</button>
+  </div>
+</div>
+
+<!-- GAME OVER SCREEN -->
+<div class="overlay hidden" id="gameoverScreen">
+  <div class="overlay-card">
+    <div class="overlay-title" style="color:var(--red);">GAME OVER</div>
+    <div class="overlay-sub">THE GRID IS FULL</div>
+    <div class="score-big" id="finalScore">0</div>
+    <div class="score-label">FINAL SCORE</div>
+    <div class="hi-score-row">
+      <span class="hi-score-label">Best</span>
+      <span class="hi-score-val" id="goHiScore">0</span>
+      <span class="new-record hidden" id="newRecord">&#9733; NEW RECORD</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+      <div class="stat-mini">
+        <div class="stat-mini-label">LEVEL</div>
+        <div class="stat-mini-val" id="finalLevel">1</div>
+      </div>
+      <div class="stat-mini">
+        <div class="stat-mini-label">MAX COMBO</div>
+        <div class="stat-mini-val gold" id="finalCombo">&#215;1</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn btn-primary" style="flex:1;padding:12px;" onclick="startGame()">PLAY AGAIN</button>
+      <button class="btn btn-muted" style="flex:1;padding:12px;" onclick="showStart()">MENU</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN GAME UI -->
+<div class="container" id="gameUI" style="display:none;">
+  <div class="header">
+    <div class="logo">GridLock<span>Fuse &amp; Clear</span></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-label">Score</div>
+      <div class="stat-value glow-blue" id="score">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Multiplier</div>
+      <div class="stat-value glow-gold" id="multiplier">&#215;1</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Best</div>
+      <div class="stat-value glow-green" id="hiScore">0</div>
+    </div>
+  </div>
+
+  <div class="level-bar-wrap">
+    <span class="level-label">LVL</span>
+    <div class="level-bar"><div class="level-fill" id="levelFill" style="width:0%"></div></div>
+    <span class="level-num" id="levelNum">1</span>
+  </div>
+
+  <div class="grid-wrap">
+    <div class="grid" id="grid"></div>
+  </div>
+
+  <div class="controls">
+    <button class="btn btn-primary" onclick="startGame()">&#8635; RESTART</button>
+    <button class="btn btn-muted" id="soundBtn" onclick="toggleSound()">🔊 SOUND</button>
+    <button class="btn btn-muted" onclick="showHowTo()">? HOW TO PLAY</button>
+  </div>
+</div>
+
+<!-- HOW TO PLAY OVERLAY -->
+<div class="overlay hidden" id="howToScreen">
+  <div class="overlay-card">
+    <div style="font-family:'Orbitron',monospace;font-weight:700;font-size:1rem;color:#60c8ff;letter-spacing:0.1em;margin-bottom:12px;">HOW TO PLAY</div>
+    <div style="text-align:left;font-size:0.82rem;line-height:2;color:var(--dim);">
+      <div>🖱️ <strong style="color:var(--text);">Click empty cells</strong> adjacent to 2+ same-color blocks</div>
+      <div>⚡ <strong style="color:var(--text);">Fusing 2</strong> blocks = 20pts per block</div>
+      <div>💥 <strong style="color:var(--text);">Fusing 3+</strong> blocks = bonus score</div>
+      <div>🔗 <strong style="color:var(--text);">Chain fusions</strong> to increase multiplier</div>
+      <div>❌ <strong style="color:var(--text);">Missing</strong> a fusion resets the multiplier</div>
+      <div>📈 <strong style="color:var(--text);">Levels</strong> speed up block spawn rate</div>
+      <div>🎯 <strong style="color:var(--text);">Colors:</strong>
+        <span class="chip red"></span>Red
+        <span class="chip blue"></span>Blue
+        <span class="chip green"></span>Green + 3 more
+      </div>
+    </div>
+    <button class="btn btn-primary" style="margin-top:16px;width:100%;padding:12px;" onclick="hideHowTo()">GOT IT</button>
+  </div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
