@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GridLock: Fuse & Clear</title>
+<title>GridLock: Fuse &amp; Clear</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -38,16 +38,16 @@
     <div class="hi-score-row">
       <span class="hi-score-label">Best</span>
       <span class="hi-score-val" id="goHiScore">0</span>
-      <span class="new-record hidden" id="newRecord">★ NEW RECORD</span>
+      <span class="new-record hidden" id="newRecord">&#9733; NEW RECORD</span>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;font-size:0.78rem;color:var(--dim);">
-      <div style="background:var(--surface2);border-radius:8px;padding:8px;border:1px solid var(--border);">
-        <div style="font-family:'Orbitron',monospace;font-size:0.6rem;letter-spacing:0.1em;margin-bottom:2px;">LEVEL</div>
-        <div style="font-family:'Orbitron',monospace;color:var(--text);font-size:1.1rem;" id="finalLevel">1</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+      <div class="stat-mini">
+        <div class="stat-mini-label">LEVEL</div>
+        <div class="stat-mini-val" id="finalLevel">1</div>
       </div>
-      <div style="background:var(--surface2);border-radius:8px;padding:8px;border:1px solid var(--border);">
-        <div style="font-family:'Orbitron',monospace;font-size:0.6rem;letter-spacing:0.1em;margin-bottom:2px;">MAX COMBO</div>
-        <div style="font-family:'Orbitron',monospace;color:var(--yellow);font-size:1.1rem;" id="finalCombo">x1</div>
+      <div class="stat-mini">
+        <div class="stat-mini-label">MAX COMBO</div>
+        <div class="stat-mini-val gold" id="finalCombo">&#215;1</div>
       </div>
     </div>
     <div style="display:flex;gap:8px;">
@@ -57,7 +57,7 @@
   </div>
 </div>
 
-<!-- MAIN GAME -->
+<!-- MAIN GAME UI -->
 <div class="container" id="gameUI" style="display:none;">
   <div class="header">
     <div class="logo">GridLock<span>Fuse &amp; Clear</span></div>
@@ -70,7 +70,7 @@
     </div>
     <div class="stat-card">
       <div class="stat-label">Multiplier</div>
-      <div class="stat-value glow-gold" id="multiplier">×1</div>
+      <div class="stat-value glow-gold" id="multiplier">&#215;1</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Best</div>
@@ -89,7 +89,7 @@
   </div>
 
   <div class="controls">
-    <button class="btn btn-primary" onclick="startGame()">↺ RESTART</button>
+    <button class="btn btn-primary" onclick="startGame()">&#8635; RESTART</button>
     <button class="btn btn-muted" id="soundBtn" onclick="toggleSound()">🔊 SOUND</button>
     <button class="btn btn-muted" onclick="showHowTo()">? HOW TO PLAY</button>
   </div>
@@ -106,7 +106,11 @@
       <div>🔗 <strong style="color:var(--text);">Chain fusions</strong> to increase multiplier</div>
       <div>❌ <strong style="color:var(--text);">Missing</strong> a fusion resets the multiplier</div>
       <div>📈 <strong style="color:var(--text);">Levels</strong> speed up block spawn rate</div>
-      <div>🎯 <strong style="color:var(--text);">Colors:</strong> <span class="chip red"></span>Red <span class="chip blue"></span>Blue <span class="chip green"></span>Green + 3 more</div>
+      <div>🎯 <strong style="color:var(--text);">Colors:</strong>
+        <span class="chip red"></span>Red
+        <span class="chip blue"></span>Blue
+        <span class="chip green"></span>Green + 3 more
+      </div>
     </div>
     <button class="btn btn-primary" style="margin-top:16px;width:100%;padding:12px;" onclick="hideHowTo()">GOT IT</button>
   </div>
