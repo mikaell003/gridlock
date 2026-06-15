@@ -21,16 +21,60 @@ Created by Mikael
 
 Gridlok is a fast-paced puzzle game designed to challenge your brain and pattern recognition skills.
 
-Built with:
-• HTML
-• CSS
-• JavaScript
-
 I love building fun and unusual experiences for the web.
 
 More games coming soon!
 
 Thanks for playing Gridlok! 🚀`);
+});
+// ===== SHARE BUTTON =====
+const shareBtn = document.createElement("button");
+shareBtn.innerHTML = "🚀 Share";
+shareBtn.style.position = "fixed";
+shareBtn.style.bottom = "20px";
+shareBtn.style.left = "20px";
+shareBtn.style.padding = "10px 15px";
+shareBtn.style.background = "#ff9800";
+shareBtn.style.color = "#fff";
+shareBtn.style.border = "none";
+shareBtn.style.borderRadius = "10px";
+shareBtn.style.cursor = "pointer";
+shareBtn.style.zIndex = "1000";
+
+document.body.appendChild(shareBtn);
+
+shareBtn.addEventListener("click", async () => {
+
+    const shareData = {
+        title: "Gridlok 🧩",
+        text: `🧩 Gridlok
+
+One grid. Endless challenges.
+
+A beautifully designed puzzle game that rewards strategy, pattern recognition, and smart thinking.
+
+Simple to learn. Difficult to master.
+
+Can you solve them all?
+
+🎮 Play free:
+https://gridlok.netlify.app`
+        ,
+        url: "https://gridlok.netlify.app"
+    };
+
+    try {
+        if (navigator.share) {
+            await navigator.share(shareData);
+        } else {
+            navigator.clipboard.writeText(
+                `${shareData.text}\n${shareData.url}`
+            );
+            alert("Link copied to clipboard!");
+        }
+    } catch (err) {
+        console.log("Share cancelled");
+    }
 });
 
 
