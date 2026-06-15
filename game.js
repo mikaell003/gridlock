@@ -1,21 +1,15 @@
-// ===== ABOUT BUTTON =====
-const aboutBtn = document.createElement("button");
-aboutBtn.innerHTML = "👨‍💻 About";
-aboutBtn.style.position = "fixed";
-aboutBtn.style.bottom = "20px";
-aboutBtn.style.right = "20px";
-aboutBtn.style.padding = "10px 15px";
-aboutBtn.style.background = "#2196f3";
-aboutBtn.style.color = "#fff";
-aboutBtn.style.border = "none";
-aboutBtn.style.borderRadius = "10px";
-aboutBtn.style.cursor = "pointer";
-aboutBtn.style.zIndex = "1000";
+const makeBtn = (txt, side, color, fn) => {
+  const b = document.createElement("button");
+  b.innerHTML = txt;
+  b.style = `position:fixed;bottom:20px;${side}:20px;padding:10px 15px;
+             background:${color};color:#fff;border:none;border-radius:10px;
+             cursor:pointer;z-index:1000`;
+  b.onclick = fn;
+  document.body.appendChild(b);
+};
 
-document.body.appendChild(aboutBtn);
-
-aboutBtn.addEventListener("click", () => {
-    alert(`🧩 Gridlok
+makeBtn("👨‍💻 About", "right", "#2196f3", () =>
+  alert(`🧩 Gridlok
 
 Created by Mikael
 
@@ -25,56 +19,20 @@ I love building fun and unusual experiences for the web.
 
 More games coming soon!
 
-Thanks for playing Gridlok! 🚀`);
-});
-// ===== SHARE BUTTON =====
-const shareBtn = document.createElement("button");
-shareBtn.innerHTML = "🚀 Share";
-shareBtn.style.position = "fixed";
-shareBtn.style.bottom = "20px";
-shareBtn.style.left = "20px";
-shareBtn.style.padding = "10px 15px";
-shareBtn.style.background = "#ff9800";
-shareBtn.style.color = "#fff";
-shareBtn.style.border = "none";
-shareBtn.style.borderRadius = "10px";
-shareBtn.style.cursor = "pointer";
-shareBtn.style.zIndex = "1000";
+Thanks for playing Gridlok! 🚀`)
+);
 
-document.body.appendChild(shareBtn);
+makeBtn("🚀 Share", "left", "#ff9800", async () => {
+  const data = {
+    title: "Gridlok 🧩",
+    text: "🧩 Gridlok\n\nOne grid. Endless challenges.\nCan you solve them all?",
+    url: "https://gridlok.netlify.app"
+  };
 
-shareBtn.addEventListener("click", async () => {
-
-    const shareData = {
-        title: "Gridlok 🧩",
-        text: `🧩 Gridlok
-
-One grid. Endless challenges.
-
-A beautifully designed puzzle game that rewards strategy, pattern recognition, and smart thinking.
-
-Simple to learn. Difficult to master.
-
-Can you solve them all?
-
-🎮 Play free:
-https://gridlok.netlify.app`
-        ,
-        url: "https://gridlok.netlify.app"
-    };
-
-    try {
-        if (navigator.share) {
-            await navigator.share(shareData);
-        } else {
-            navigator.clipboard.writeText(
-                `${shareData.text}\n${shareData.url}`
-            );
-            alert("Link copied to clipboard!");
-        }
-    } catch (err) {
-        console.log("Share cancelled");
-    }
+  navigator.share
+    ? await navigator.share(data)
+    : (navigator.clipboard.writeText(data.url),
+       alert("Link copied!"));
 });
 
 
