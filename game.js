@@ -1,3 +1,39 @@
+// ===== ABOUT BUTTON =====
+const aboutBtn = document.createElement("button");
+aboutBtn.innerHTML = "👨‍💻 About";
+aboutBtn.style.position = "fixed";
+aboutBtn.style.bottom = "20px";
+aboutBtn.style.right = "20px";
+aboutBtn.style.padding = "10px 15px";
+aboutBtn.style.background = "#2196f3";
+aboutBtn.style.color = "#fff";
+aboutBtn.style.border = "none";
+aboutBtn.style.borderRadius = "10px";
+aboutBtn.style.cursor = "pointer";
+aboutBtn.style.zIndex = "1000";
+
+document.body.appendChild(aboutBtn);
+
+aboutBtn.addEventListener("click", () => {
+    alert(`🧩 Gridlok
+
+Created by Mikael
+
+Gridlok is a fast-paced puzzle game designed to challenge your brain and pattern recognition skills.
+
+Built with:
+• HTML
+• CSS
+• JavaScript
+
+I love building fun and unusual experiences for the web.
+
+More games coming soon!
+
+Thanks for playing Gridlok! 🚀`);
+});
+
+
 const SIZE = 6;
 const COLORS = ['red','blue','green','yellow','purple','orange'];
 const SCORE_PER_BLOCK = 10;
