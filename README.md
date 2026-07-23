@@ -4,7 +4,7 @@ A fast-paced browser puzzle game where players strategically clear colored block
 
 ## 📖 About
 
-GridLogic: Fuse & Clear is a minimalist arcade-puzzle game built with pure HTML, CSS, and JavaScript. Colored blocks continuously spawn onto a 6×6 grid. Players must click empty cells to fuse and clear neighboring blocks of the same color, earning points and increasing their score multiplier.
+**[GridLogic: Fuse & Clear](https://github.com/mikaell003/gridlogic)** is a minimalist arcade-puzzle game built with pure HTML, CSS, and JavaScript. Colored blocks continuously spawn onto a 6×6 grid. Players must click empty cells to fuse and clear neighboring blocks of the same color, earning points and increasing their score multiplier.
 
 The challenge grows over time as blocks spawn faster and faster. Once the grid is completely filled, the game ends.
 
@@ -12,124 +12,102 @@ The challenge grows over time as blocks spawn faster and faster. Once the grid i
 
 ## ✨ Features
 
-* 🎯 Simple one-click gameplay
-* 🎨 Five unique block colors
-* 🚀 Increasing difficulty over time
-* 🔥 Score multiplier system
-* 📱 Responsive design for desktop, tablet, and mobile
-* ⚡ Built with vanilla JavaScript (no frameworks)
-* 🎮 Instant play in any modern browser
+* **One-Click Gameplay**: Intuitive mechanics for all ages.
+* **Five Colors**: Unique block colors create diverse boards.
+* **Scaling Difficulty**: Spawning speeds up over time.
+* **Combo Multiplier**: Higher risks yield bigger score rewards.
+* **Fully Responsive**: Optimized for desktop, tablet, and mobile.
+* **Vanilla Tech**: Zero frameworks for lightning-fast loads.
+* **Instant Play**: Runs directly in any modern browser.
 
 ---
 
 ## 🕹️ How to Play
 
-1. Wait for colored blocks to appear.
-2. Click an empty cell.
-3. If two or more adjacent blocks share the same color, they are cleared.
-4. Earn points for every successful clear.
-5. Build multiplier chains for higher scores.
-6. Survive as long as possible before the board fills up.
+1. **Watch**: Wait for colored blocks to appear.
+2. **Target**: Click an empty cell adjacent to blocks.
+3. **Fuse**: Matching adjacent colors clear instantly.
+4. **Score**: Earn points for every successful clear.
+5. **Chain**: Build multiplier chains for massive scores.
+6. **Survive**: Keep clearing before the board fills up.
 
 ---
 
-## 🏆 Scoring
+## 🏆 Scoring System
 
-| Action         | Points          |
-| -------------- | --------------- |
-| Clear 2 blocks | 20 × multiplier |
-| Clear 3 blocks | 30 × multiplier |
-| Clear 4 blocks | 40 × multiplier |
-| Clear 5 blocks | 50 × multiplier |
+| Blocks Cleared | Base Points | Multiplier Impact |
+| :--- | :--- | :--- |
+| **2 Blocks** | 20 | 20 × Current Multiplier |
+| **3 Blocks** | 30 | 30 × Current Multiplier |
+| **4 Blocks** | 40 | 40 × Current Multiplier |
+| **5+ Blocks** | 50 | 50 × Current Multiplier |
 
-Successful clears increase the multiplier.
-
-Failed moves reset the multiplier back to 1.
+* 🔥 **Success**: Clears increase your current multiplier.
+* ⚠️ **Failure**: Missed moves reset the multiplier to 1.
 
 ---
 
 ## 🛠️ Tech Stack
 
-* HTML5
-* CSS3
-* JavaScript (ES6)
+* **Structure**: HTML5 Semantic Markup
+* **Styling**: CSS3 Custom Properties & Flexbox/Grid
+* **Logic**: JavaScript (ES6+) Canvas/DOM Manipulation
 
 ---
 
 ## 📂 Project Structure
 
 ```text
-GridLock/
-│
-├── index.html
-├── styles.css
-├── game.js
-├── README.md
-
+GridLogic/
+├── index.html          # Game UI structure
+├── styles.css          # Responsive layouts & animations
+├── game.js            # Core game logic & engine
+└── README.md           # Documentation
 ```
 
 ---
 
-## 🚀 Installation
+## 🚀 Quick Start
 
-Clone the repository:
-
+### 1. Clone the Repository
 ```bash
-https://github.com/mikaell003/gridlogic.git
+git clone https://github.com/mikaell003/gridlogic.git
 ```
 
-Open the project:
-
+### 2. Navigate to Project
 ```bash
 cd gridlogic
 ```
 
-Launch:
-
+### 3. Launch the Game
+Open `index.html` directly in your favorite browser, or serve it locally:
 ```bash
-index.html
+# Using Python to host locally (Optional)
+python -m http.server 8000
 ```
-
-or open the file directly in your browser.
-
----
-
-## 🎯 Future Improvements
-
-* Sound effects
-* Combo animations
-* Leaderboards
-* High score saving
-* Special power-up blocks
-* Multiple game modes
-* Mobile touch enhancements
+Then visit `http://localhost:8000` in your browser.
 
 ---
 
-## 📱 Responsive Support
+## 🎯 Roadmap & Future Improvements
 
-The game is optimized for:
-
-* Desktop
-* Laptop
-* Tablet
-* Android devices
-* iPhone devices
+* 🔊 **Audio**: Immersive sound effects and background music.
+* ✨ **Visuals**: Dynamic combo animations and particle effects.
+* 💾 **Persistence**: High score saving via LocalStorage.
+* 🏅 **Competition**: Global leaderboards and achievements.
+* ⚡ **Power-ups**: Special bomb or rainbow blocks.
+* 🕹️ **Modes**: Time Attack and Endless modes.
 
 ---
 
 ## 📜 License
 
-MIT License
-
-Feel free to modify, improve, and distribute this project.
+Distributed under the **MIT License**. See `LICENSE` for more information.
 
 ---
 
 ## 👨‍💻 Author
 
-Mikaell003
-
-Front-End Developer | Full-Stack Web Builder
-
-Built with HTML, CSS, and JavaScript.
+**Mikaell003**  
+*Front-End Developer | Full-Stack Web Builder*  
+🚀 Open to contributions and feedback!
